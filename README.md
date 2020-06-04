@@ -1,5 +1,8 @@
 # diff_extraction_web 
 
+## Description  
+It is a text difference extraction tool.  
+
 ## Screen image
 ![image](https://user-images.githubusercontent.com/10069642/83711676-d2ae5b00-a65e-11ea-8e6c-3c84f547816b.png)
 
