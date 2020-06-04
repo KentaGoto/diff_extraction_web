@@ -2,7 +2,7 @@
 
 ## Usage
 1. Enter your text in the **[Old version]** and **[New version]**.  
-2. Click the "Submit" button.  
+2. Click the **[Submit]** button.  
 3. You will see the text on the transitioned screen.  
 
 ## Option  
