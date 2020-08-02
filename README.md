@@ -18,5 +18,5 @@ It is a text difference extraction tool.
 - Windows  
 - grep  
 - diff  
-- Perl 5.26 or above  
+- Perl5  
 - Mojolicious::Lite
