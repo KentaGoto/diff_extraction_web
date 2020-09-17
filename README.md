@@ -20,3 +20,6 @@ It is a text difference extraction tool.
 - diff  
 - Perl5  
 - Mojolicious::Lite
+
+## License
+MIT
