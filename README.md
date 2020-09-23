@@ -23,3 +23,6 @@ It is a text difference extraction tool.
 
 ## License
 MIT
+
+## Author  
+Kenta Goto
