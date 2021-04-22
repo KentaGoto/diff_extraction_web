@@ -6,24 +6,21 @@ binmode STDOUT, ':encoding(UTF-8)';
 my $app = app;
 my $url = 'http://localhost:3001'; # URL
 
-# トップページ
 get '/' => sub {
 	my $self = shift;
 	$self->render('index', top_page => $url);
 };
 
-# データを受け取って処理
 post '/' => sub {
 	my $self = shift;
-	# ホームディレクトリ
 	my $home = $app->home;
 
-	# パラメーターの取得
+	# Get parameters
 	my $old = $self->param('old');
 	my $new = $self->param('new');
 	my $nd = $self->param('nd');
 	
-	# 入力が空の場合はエラー表示
+	# If the input is empty, an error is displayed.
 	if (! length $old and ! length $new){
 	  $self->render('index', error => 'Old version area and New version area is empty');
 	  return;
@@ -35,11 +32,11 @@ post '/' => sub {
 	  return;
 	}
 
-	# tmpフォルダの旧版と新版を削除
+	# Delete the old and new versions of the tmp folder.
 	unlink './tmp/old.txt';
 	unlink './tmp/new.txt';
 	
-	# tmpフォルダがなかったら作る
+	# If you don't have a tmp folder, create one.
 	if ( -d './tmp' ){
 	
 	} else {
@@ -67,17 +64,17 @@ post '/' => sub {
 	my $nd_flag = 0;
 	my $command;
 	if ( defined $nd ){
-		# 差異のない箇所のみ抽出
+		# Extraction of only the parts with no difference.
 		$command = 'diff.exe -U 1000000 "' . $tmp_old_fullpath . '"' . ' ' . '"' . $tmp_new_fullpath . '"' . ' | grep.exe -E "^ "';
 		$nd_flag = 1;
 		&Extraction(\@result, $command, $nd_flag);
 	} else {
-		# newに追加されたテキストのみ抽出
+		# Extract only text added to $new.
 		$command = 'diff.exe "' . $tmp_old_fullpath . '"' . ' ' . '"' . $tmp_new_fullpath . '"' . ' | grep.exe -E "^>"';
 		&Extraction(\@result, $command, $nd_flag);
 	}
 	
-	# 差分抽出結果を表示
+	# Display the result of differential extraction.
 	$self->render(template => 'result',
 				  result => \@result
 			     );
@@ -89,9 +86,9 @@ sub Extraction {
 	my @command_result_array = split(/\n/,$command_result);
 	foreach my $line (@command_result_array){
 		if ($nd_flag == 1){
-			$line =~ s/^ //g; # 行頭の半スペを削除
+			$line =~ s/^ //g; # Remove space at the beginning of a line.
 		} else {
-			$line =~ s/^>\s//g; # 行頭の「> 」を削除
+			$line =~ s/^>\s//g; # Remove ">" from the beginning of the line.
 		}
 		push @$result, $line;
 	}
@@ -154,13 +151,13 @@ __DATA__
 @@ index.html.ep
 % layout 'common', title => 'Text diff extraction';
 %= javascript begin
-  // プログレスバー
+  // Progress bar
   $(document).on('click', '#submit', function() {
     $('#progress').progressbar({
         max: 100,
         value: false
 		}).height(10);
-		// ボタンの非表示
+		// Hide buttons
 		$('#submit').hide();
 		$('#clear').hide();
 	});
